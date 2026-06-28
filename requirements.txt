@@ -1,0 +1,33 @@
+# Audio / Video
+yt-dlp
+ffmpeg-python
+pydub
+
+# Transcription (local Whisper)
+openai-whisper
+torch
+numpy
+
+# Translation
+deep-translator
+
+# LangChain LCEL + Mistral
+langchain
+langchain-core
+langchain-community
+langchain-mistralai
+mistralai
+
+# RAG — vector store & embeddings
+chromadb
+langchain-huggingface
+sentence-transformers
+
+# UI
+streamlit
+
+# PDF export
+fpdf2
+
+# Utilities
+python-dotenv
