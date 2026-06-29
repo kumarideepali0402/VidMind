@@ -21,7 +21,7 @@ mistralai
 # RAG — vector store & embeddings
 chromadb
 langchain-huggingface
-sentence-transformers
+sentence-transformers>=3.0
 
 # UI
 streamlit
