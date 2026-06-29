@@ -1,4 +1,4 @@
-# AI Video Assistant
+# VidMind
 
 Transcribe, summarize, and chat with any meeting or video. Paste a YouTube URL or drop in a local file — the assistant handles the rest.
 
