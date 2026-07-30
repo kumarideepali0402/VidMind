@@ -1,13 +1,15 @@
-import yt_dlp
-from pydub import AudioSegment
 import os
 
-DOWNLOAD_DIR = 'downloads'
-os.makedirs(DOWNLOAD_DIR, exist_ok = True)
+import yt_dlp
+from pydub import AudioSegment
 
-def download_youtube_audio(url: str) -> str:
-    output_path = os.path.join(DOWNLOAD_DIR,"%(title)s.%(ext)s");
-    ydl_opts = {
+DOWNLOAD_DIR = "downloads"
+os.makedirs(DOWNLOAD_DIR, exist_ok=True)
+
+
+def _youtube_ydl_opts(output_path: str) -> dict:
+    """yt-dlp options tuned for YouTube's current anti-bot / JS-challenge requirements."""
+    return {
         "format": "bestaudio/best",
         "outtmpl": output_path,
         "postprocessors": [
@@ -18,12 +20,45 @@ def download_youtube_audio(url: str) -> str:
             }
         ],
         "quiet": True,
+        "no_warnings": True,
+        # YouTube now requires a JS runtime to solve download challenges (403 without it).
+        "js_runtimes": {"node": {}},
+        "remote_components": ["ejs:github"],
+        "extractor_args": {
+            "youtube": {
+                "player_client": ["android", "web"],
+            }
+        },
+        "retries": 10,
+        "fragment_retries": 10,
     }
 
-    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-        info = ydl.extract_info(url, download=True)
-        filename = ydl.prepare_filename(info).replace(".webm", ".wav").replace(".m4a", ".wav")
-    return filename
+
+def download_youtube_audio(url: str) -> str:
+    output_path = os.path.join(DOWNLOAD_DIR, "%(title)s.%(ext)s")
+    ydl_opts = _youtube_ydl_opts(output_path)
+
+    try:
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            info = ydl.extract_info(url, download=True)
+            base_path, _ = os.path.splitext(ydl.prepare_filename(info))
+            wav_path = f"{base_path}.wav"
+            if os.path.exists(wav_path):
+                return wav_path
+            # Fallback if postprocessor kept another extension.
+            prepared = ydl.prepare_filename(info)
+            if os.path.exists(prepared):
+                return prepared
+            raise FileNotFoundError(f"Download finished but audio file not found for: {url}")
+    except yt_dlp.utils.DownloadError as exc:
+        message = str(exc)
+        if "403" in message or "Forbidden" in message:
+            raise RuntimeError(
+                "YouTube blocked the audio download (HTTP 403). "
+                "Try again shortly, run `pip install -U yt-dlp`, ensure Node.js is installed, "
+                "or upload the video file directly instead of pasting a URL."
+            ) from exc
+        raise
 
 
 

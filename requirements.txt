@@ -1,5 +1,5 @@
 # Audio / Video
-yt-dlp
+yt-dlp>=2026.6.9
 ffmpeg-python
 pydub
 
@@ -23,11 +23,10 @@ chromadb
 langchain-huggingface
 sentence-transformers>=3.0
 
-# UI
-streamlit
-
-# PDF export
-fpdf2
+# Web API + UI
+fastapi
+uvicorn[standard]
+python-multipart
 
 # Utilities
 python-dotenv

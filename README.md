@@ -1,6 +1,6 @@
 # VidMind
 
-Transcribe, summarize, and chat with any meeting or video. Paste a YouTube URL or drop in a local file — the assistant handles the rest.
+Transcribe, summarize, and chat with any meeting or video. Paste a YouTube URL or upload a local file — the assistant handles the rest.
 
 ## Features
 
@@ -22,7 +22,7 @@ Transcribe, summarize, and chat with any meeting or video. Paste a YouTube URL o
 | LLM | Mistral Small via LangChain LCEL |
 | Embeddings | `all-MiniLM-L6-v2` (HuggingFace BGE) |
 | Vector store | ChromaDB |
-| Web UI | Streamlit |
+| Web UI | HTML, CSS, JavaScript + FastAPI |
 
 ## Prerequisites
 
@@ -43,7 +43,7 @@ Transcribe, summarize, and chat with any meeting or video. Paste a YouTube URL o
 
 ```bash
 git clone <repo-url>
-cd "AI Video Assistant"
+cd VidMind
 
 python -m venv .venv
 # Windows
@@ -71,13 +71,17 @@ SARVAM_STT_MODEL=saaras:v2.5
 
 ## Usage
 
-### Web UI (Streamlit)
+### Web UI
 
 ```bash
-streamlit run app.py
+python -m uvicorn api:app --reload
 ```
 
-Opens at `http://localhost:8501`. Paste a YouTube URL or local file path in the sidebar, choose a language, and click **Analyze**.
+Or on Windows, double-click `run_server.bat`.
+
+Opens at `http://127.0.0.1:8000`. Paste a YouTube URL or upload a local audio/video file, choose a language, and click **Analyze**.
+
+> **Note:** If `uvicorn` alone fails with `uv trampoline failed to canonicalize script path`, use `python -m uvicorn` instead (caused by the `uv` tool intercepting the command).
 
 ### CLI
 
@@ -91,7 +95,12 @@ Prompts for a URL or file path and language, prints results, then enters an inte
 
 ```
 ├── main.py                 # Pipeline orchestration + CLI entry point
-├── app.py                  # Streamlit web UI
+├── api.py                  # FastAPI backend for the web UI
+├── run_server.bat          # Windows shortcut to start the server
+├── static/
+│   ├── index.html          # Frontend page
+│   ├── css/style.css
+│   └── js/app.js
 ├── requirements.txt
 ├── .env                    # API keys (not committed)
 ├── core/

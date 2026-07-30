@@ -1,1 +1,37 @@
-"downloads/" 
+# Environment
+.env
+.venv/
+venv/
+
+# Runtime / generated data
+downloads/*
+!downloads/.gitkeep
+!downloads/uploads/
+downloads/uploads/*
+!downloads/uploads/.gitkeep
+vector_db/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# Media (user uploads / downloads)
+*.mp4
+*.wav
+*.mp3
+*.webm
+*.mkv
+*.avi
+*.mov
+
+# Presentations / reports (not part of app)
+*.pptx
+*.zip
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+~$*

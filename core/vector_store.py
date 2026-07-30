@@ -33,11 +33,10 @@ def build_vector_store(transcript : str) -> Chroma:
 
     embeddings = get_embeddings()
     vector_store = Chroma.from_documents(
-        document = docs,
-        embedding = embeddings,
-        collection_name = COLLECTION_NAME,
-        persist_directory = CHROMA_DIR 
-
+        documents=docs,
+        embedding=embeddings,
+        collection_name=COLLECTION_NAME,
+        persist_directory=CHROMA_DIR,
     )
 
     return vector_store
