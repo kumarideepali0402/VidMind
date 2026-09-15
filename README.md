@@ -2,6 +2,10 @@
 
 Transcribe, summarize, and chat with any meeting or video. Paste a YouTube URL or upload a local file — the assistant handles the rest.
 
+## Demo
+
+https://youtu.be/g2ejJvI_LWw
+
 ## Features
 
 - **Transcription** — English via OpenAI Whisper (local), Hinglish via Sarvam AI (cloud, translates to English)
