@@ -4,7 +4,7 @@ Transcribe, summarize, and chat with any meeting or video. Paste a YouTube URL o
 
 ## Demo
 
-https://youtu.be/g2ejJvI_LWw
+[![Watch the Demo](https://img.youtube.com/vi/g2ejJvI_LWw/maxresdefault.jpg)](https://youtu.be/g2ejJvI_LWw)
 
 ## Features
 
